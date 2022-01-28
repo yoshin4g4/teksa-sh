@@ -1,0 +1,16 @@
+[submodule "bmya/bmya-enterprise"]
+	path = bmya/bmya-enterprise
+	url = git@github.com:bmya/bmya-enterprise.git
+	branch = 15.0
+[submodule "bmya/server-tools"]
+	path = bmya/server-tools
+	url = git@github.com:bmya/server-tools.git
+	branch = 15.0
+[submodule "bmya/server-ux"]
+	path = bmya/server-ux
+	url = git@github.com:bmya/server-ux.git
+	branch = 15.0
+[submodule "teksa"]
+	path = teksa
+	url = git@github.com:bmya/teksa.git
+	branch = 15.0
