@@ -22,18 +22,21 @@ class ProductTemplate(models.Model):
         for rec in self:
             rec.acs_supplierinfo_id = rec.seller_ids and rec.seller_ids[0].id or False
 
-    acs_import_factor = fields.Float(string="Improt Factor")
+    acs_import_factor = fields.Float(string="IP")
     acs_cb_usd = fields.Float(compute="acs_compute_data", string="CB USD", store=True, compute_sudo=True)
     acs_tc = fields.Float(string="T/C")
     acs_cb_clp = fields.Float(compute="acs_compute_data", string="CB CLP", store=True, compute_sudo=True)
     acs_mul = fields.Float(string="Mul.")
-    acs_list_price = fields.Float(compute="acs_compute_data", string="New List Price", store=True, compute_sudo=True)
+    acs_list_price = fields.Float(compute="acs_compute_data", string="Priceo de Venta", store=True, compute_sudo=True)
     acs_discount = fields.Float(string="Discount")
     acs_sale = fields.Float(compute="acs_compute_data", string="Sale", store=True, compute_sudo=True)
-    acs_margin = fields.Float(compute="acs_compute_data", string="Margin", store=True, compute_sudo=True)
+    acs_margin = fields.Float(compute="acs_compute_data", string="Margen", store=True, compute_sudo=True)
     acs_supplierinfo_id = fields.Many2one('product.supplierinfo', compute="acs_supplier_data", string="Vendor Pricelist", compute_sudo=True)
     acs_partner_id = fields.Many2one('res.partner', related="acs_supplierinfo_id.name", string="Vendor")
     acs_supplier_product_name = fields.Char(related="acs_supplierinfo_id.product_name", string="Supplier Product Name")
     acs_supplier_product_code = fields.Char(related="acs_supplierinfo_id.product_code", string="Supplier Product Code")
 
-    
+    def acs_update_price(self):
+        for rec in self:
+            if rec.acs_list_price:
+                rec.list_price = rec.acs_list_price

@@ -25,6 +25,7 @@
     'license': 'OPL-1',
     'description': """Extension By Almighty Consulting Solutions Pvt. Ltd. for Teksa""",
     'data': [
+        'security/security.xml',
         'views/product_view.xml',
         'views/menu_item.xml',
     ]
