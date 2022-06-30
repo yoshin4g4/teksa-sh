@@ -22,7 +22,18 @@ class ProductTemplate(models.Model):
         for rec in self:
             rec.acs_supplierinfo_id = rec.seller_ids and rec.seller_ids[0].id or False
 
+    @api.depends('acs_supplierinfo_id','acs_supplierinfo_id.price')
+    def _get_supplier_price(self):
+        for rec in self:
+            acs_supplier_price = 0
+            if rec.acs_supplierinfo_id:
+                acs_supplier_price = rec.acs_supplierinfo_id.price
+            rec.acs_supplier_price = acs_supplier_price
+
     acs_import_factor = fields.Float(string="IP")
+    acs_supplier_price = fields.Float(string='Supplier Price', compute="_get_supplier_price", inverse='_inverse_supplier_price', compute_sudo=True)
+    acs_updated_supplier_price = fields.Float(string='Updated Supplier Price')
+
     acs_cb_usd = fields.Float(compute="acs_compute_data", string="CB USD", store=True, compute_sudo=True)
     acs_tc = fields.Float(string="T/C")
     acs_cb_clp = fields.Float(compute="acs_compute_data", string="CB CLP", store=True, compute_sudo=True)
@@ -35,6 +46,12 @@ class ProductTemplate(models.Model):
     acs_partner_id = fields.Many2one('res.partner', related="acs_supplierinfo_id.name", string="Vendor")
     acs_supplier_product_name = fields.Char(related="acs_supplierinfo_id.product_name", string="Supplier Product Name")
     acs_supplier_product_code = fields.Char(related="acs_supplierinfo_id.product_code", string="Supplier Product Code")
+
+    @api.onchange('acs_supplier_price')
+    def _inverse_supplier_price(self):
+        for rec in self:
+            if rec.acs_supplierinfo_id:
+                rec.acs_supplierinfo_id.price = rec.acs_supplier_price
 
     def acs_update_price(self):
         for rec in self:

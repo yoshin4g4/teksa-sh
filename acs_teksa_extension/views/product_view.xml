@@ -9,10 +9,10 @@
             <tree editable="bottom" create="false">
                 <field name="default_code" readonly="1"/>
                 <field name="name" readonly="1"/>
-                <field name="list_price" readonly="1" string="FOB"/>
+                <field name="acs_supplier_price" readonly="1" string="FOB"/>
                 <field name="acs_import_factor"/>
                 <field name="acs_cb_usd" readonly="1" force_save="1"/>
-                <field name="acs_tc" groups="acs_teksa_extension.group_allowed_updating_price"/>
+                <field name="acs_tc" readonly="1"/>
                 <field name="acs_cb_clp" readonly="1" force_save="1"/>
                 <field name="standard_price" readonly="1"/>
                 <field name="acs_mul"/>
@@ -29,6 +29,22 @@
                 <field name="uom_id"/>
             </tree>
         </field> 
+    </record>
+
+    <record model="ir.ui.view" id="acs_product_template_view_tree_update_allowed">
+        <field name="name">product.template.manager.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="acs_product_template_view_tree" />
+        <field name="groups_id" eval="[(6, 0, [ref('acs_teksa_extension.group_allowed_updating_price') ])]" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='acs_supplier_price']" position="attributes">
+                <attribute name="readonly">0</attribute>
+                <attribute name="attrs">{'readonly': [('acs_supplierinfo_id','=',False)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='acs_tc']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
     </record>
 
     <record id="acs_product_template_action" model="ir.actions.act_window">
