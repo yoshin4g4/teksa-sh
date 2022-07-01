@@ -8,11 +8,11 @@ import math
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    @api.depends('acs_import_factor', 'acs_tc', 'acs_discount', 'list_price', 'acs_list_price', 'acs_mul')
+    @api.depends('acs_import_factor', 'acs_tc', 'acs_discount', 'acs_supplier_price', 'acs_list_price', 'acs_mul')
     def acs_compute_data(self):
         for rec in self:
             acs_margin = 0            
-            rec.acs_cb_usd = rec.list_price * rec.acs_import_factor
+            rec.acs_cb_usd = rec.acs_supplier_price * rec.acs_import_factor
             rec.acs_cb_clp = math.ceil(rec.acs_cb_usd * rec.acs_tc)
             rec.acs_list_price = math.ceil(rec.acs_mul * rec.acs_cb_clp)
             rec.acs_sale = math.ceil((rec.acs_discount/100) * rec.acs_list_price)
