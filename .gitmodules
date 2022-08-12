@@ -18,7 +18,7 @@
 [submodule "bmya/odoo-bmya"]
 	path = bmya/odoo-bmya
 	url = git@github.com:bmya/odoo-bmya.git
-	branch = 15.0_dev
+	branch = 15.0
 
 [submodule "OCA/purchase-workflow"]
 	path = OCA/purchase-workflow
