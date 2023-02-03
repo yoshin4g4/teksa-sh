@@ -1,7 +1,3 @@
-[submodule "bmya/bmya-enterprise"]
-	path = bmya/bmya-enterprise
-	url = git@github.com:bmya/bmya-enterprise.git
-	branch = 15.0
 [submodule "bmya/server-tools"]
 	path = bmya/server-tools
 	url = git@github.com:bmya/server-tools.git
