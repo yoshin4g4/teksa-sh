@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-
-    <menuitem id="menu_acs_product_template" name="Product Vendor Data" parent="stock.menu_stock_inventory_control" action="acs_product_template_action" sequence="120"/>
-
-</odoo>
